@@ -3,7 +3,7 @@ using System.Text.Json;
 
 namespace MyGames.Services.RawgService
 {
-    public class RawgService
+    public class RawgService : IRawgService
     {
         private readonly HttpClient _httpClient;
         private readonly string _apiKey = "api key :)";
@@ -13,7 +13,7 @@ namespace MyGames.Services.RawgService
             _httpClient = httpClient;
         }
 
-        public async Task<List<GameDto>> SearchGames(string query)
+        public async Task<List<GameDto>> SearchGamesAsync(string query)
         {
             var url = $"https://api.rawg.io/api/games?key={_apiKey}&search={query}";
             var response = await _httpClient.GetAsync(url);
