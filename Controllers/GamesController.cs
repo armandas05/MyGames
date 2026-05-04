@@ -17,7 +17,7 @@ namespace MyGames.Controllers
         [HttpGet("search")]
         public async Task<IActionResult> Search(string query)
         {
-            var games = await _rawgService.SearchGames(query);
+            var games = await _rawgService.SearchGamesAsync(query);
             return Ok(games);
         }
     }
