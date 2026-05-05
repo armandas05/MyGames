@@ -21,16 +21,8 @@ namespace MyGames.Controllers
             var games = await _backlogService.GetUserGamesAsync();
 
             return games;
-            
+
         }
-
-        [HttpDelete]
-        public async Task DeleteUserGame(int id)
-        {
-            await _backlogService.DeleteUserGameAsync(id);
-        }
-
-
         [HttpPost]
         public async Task<IActionResult> AddGameEntry(CreateGameEntryDto dto)
         {
@@ -40,5 +32,20 @@ namespace MyGames.Controllers
 
             return Ok();
         }
+        [HttpDelete("{id}")]
+        public async Task DeleteUserGame(int id)
+        {
+            await _backlogService.DeleteUserGameAsync(id);
+        }
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateUserGameInfo(UpdateGameEntryDto dto, int id)
+        {
+            if (dto == null) return BadRequest();
+
+            await _backlogService.UpdateGameInfoAsync(dto, id);
+
+            return Ok();
+        }
+
     }
 }

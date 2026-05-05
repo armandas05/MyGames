@@ -14,7 +14,7 @@ namespace MyGames.Services.BacklogService
         }
         public async Task<List<UserGameListDto>> GetUserGamesAsync()
         {
-            // remove hardcore
+            // remove hardcode
             var gamesList = await _context.GameEntries
                 .Where(g => g.UserID == 1)
                 .Select(g => new UserGameListDto
@@ -32,7 +32,7 @@ namespace MyGames.Services.BacklogService
         }
         public async Task<bool> DeleteUserGameAsync(int id)
         {
-            // remove hardcore
+            // remove hardcode
             var game = await _context.GameEntries
                 .FirstOrDefaultAsync(g => g.GameEntryID == id && g.UserID == 1);
 
@@ -46,7 +46,7 @@ namespace MyGames.Services.BacklogService
         }
         public async Task AddGameEntryAsync(CreateGameEntryDto dto)
         {
-            // remove hardcore
+            // remove hardcode
             var user = await _context.Users.FindAsync(1);
             var gameEntry = new GameEntry
             {
@@ -59,6 +59,23 @@ namespace MyGames.Services.BacklogService
 
             await _context.GameEntries.AddAsync(gameEntry);
             await _context.SaveChangesAsync();
+        }
+        public async Task<bool> UpdateGameInfoAsync(UpdateGameEntryDto dto, int id)
+        {
+            // remove hardcode
+            var game = await _context.GameEntries
+                .FirstOrDefaultAsync(g => g.GameEntryID == id && g.UserID == 1);
+
+            if (game == null) return false;
+
+            game.Status = dto.Status;
+            game.Rating = dto.Rating;
+            game.Progress = dto.Progress;
+            game.Notes = dto.Notes;
+
+            await _context.SaveChangesAsync();
+
+            return true;
         }
     }
 }

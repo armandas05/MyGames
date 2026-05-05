@@ -7,5 +7,6 @@ namespace MyGames.Services.BacklogService
         public Task AddGameEntryAsync(CreateGameEntryDto dto);
         public Task<List<UserGameListDto>> GetUserGamesAsync();
         public Task<bool> DeleteUserGameAsync(int id);
+        public Task<bool> UpdateGameInfoAsync(UpdateGameEntryDto dto, int id);
     }
 }
