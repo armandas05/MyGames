@@ -12,11 +12,12 @@ namespace MyGames.Services.BacklogService
         {
             _context = context;
         }
-        public async Task<List<UserGameListDto>> GetUserGamesAsync()
+        public async Task<List<UserGameListDto>> GetUserGamesAsync(int userId)
         {
-            // remove hardcode
+            var user = await _context.Users.FindAsync(userId);
+
             var gamesList = await _context.GameEntries
-                .Where(g => g.UserID == 1)
+                .Where(g => g.UserID == user.UserID)
                 .Select(g => new UserGameListDto
                 {
                     GameID = g.GameID,
@@ -30,11 +31,12 @@ namespace MyGames.Services.BacklogService
 
             return gamesList;
         }
-        public async Task<bool> DeleteUserGameAsync(int id)
+        public async Task<bool> DeleteUserGameAsync(int id, int userId)
         {
-            // remove hardcode
+            var user = await _context.Users.FindAsync(userId);
+
             var game = await _context.GameEntries
-                .FirstOrDefaultAsync(g => g.GameEntryID == id && g.UserID == 1);
+                .FirstOrDefaultAsync(g => g.GameEntryID == id && g.UserID == user.UserID);
 
             if (game == null) return false;
 
@@ -44,10 +46,9 @@ namespace MyGames.Services.BacklogService
 
             return true;
         }
-        public async Task AddGameEntryAsync(CreateGameEntryDto dto)
+        public async Task AddGameEntryAsync(CreateGameEntryDto dto, int userId)
         {
-            // remove hardcode
-            var user = await _context.Users.FindAsync(1);
+            var user = await _context.Users.FindAsync(userId);
             var gameEntry = new GameEntry
             {
                 GameID = dto.GameID,
@@ -60,11 +61,12 @@ namespace MyGames.Services.BacklogService
             await _context.GameEntries.AddAsync(gameEntry);
             await _context.SaveChangesAsync();
         }
-        public async Task<bool> UpdateGameInfoAsync(UpdateGameEntryDto dto, int id)
+        public async Task<bool> UpdateGameInfoAsync(UpdateGameEntryDto dto, int id, int userId)
         {
-            // remove hardcode
+            var user = await _context.Users.FindAsync(userId);
+
             var game = await _context.GameEntries
-                .FirstOrDefaultAsync(g => g.GameEntryID == id && g.UserID == 1);
+                .FirstOrDefaultAsync(g => g.GameEntryID == id && g.UserID == user.UserID);
 
             if (game == null) return false;
 
