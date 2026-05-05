@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MyGames.Data.DTO;
 using MyGames.Services.BacklogService;
 
 namespace MyGames.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class BacklogController : Controller
@@ -18,7 +20,9 @@ namespace MyGames.Controllers
         [HttpGet]
         public async Task<List<UserGameListDto>> GetUserGames()
         {
-            var games = await _backlogService.GetUserGamesAsync();
+            var userId = int.Parse(User.FindFirst("userId")!.Value);
+
+            var games = await _backlogService.GetUserGamesAsync(userId);
 
             return games;
 
@@ -28,21 +32,27 @@ namespace MyGames.Controllers
         {
             if (dto == null) return BadRequest();
 
-            await _backlogService.AddGameEntryAsync(dto);
+            var userId = int.Parse(User.FindFirst("userId")!.Value);
+
+            await _backlogService.AddGameEntryAsync(dto, userId);
 
             return Ok();
         }
         [HttpDelete("{id}")]
         public async Task DeleteUserGame(int id)
         {
-            await _backlogService.DeleteUserGameAsync(id);
+            var userId = int.Parse(User.FindFirst("userId")!.Value);
+
+            await _backlogService.DeleteUserGameAsync(id, userId);
         }
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUserGameInfo(UpdateGameEntryDto dto, int id)
         {
             if (dto == null) return BadRequest();
 
-            await _backlogService.UpdateGameInfoAsync(dto, id);
+            var userId = int.Parse(User.FindFirst("userId")!.Value);
+
+            await _backlogService.UpdateGameInfoAsync(dto, id, userId);
 
             return Ok();
         }
