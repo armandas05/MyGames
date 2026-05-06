@@ -19,10 +19,12 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 
+// Controllers
 builder.Services.AddControllers();
 
-builder.Services.AddEndpointsApiExplorer();
 
+// SWAGGER
+builder.Services.AddEndpointsApiExplorer();
 // swagger jwt auth testavimui
 builder.Services.AddSwaggerGen(options =>
 {
@@ -52,7 +54,20 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
+// CORS FRONTEND
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy.WithOrigins("http://localhost:5173")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
+// SERVICES
 builder.Services.AddHttpClient<IRawgService, RawgService>();
+
 builder.Services.AddScoped<IBacklogService, BacklogService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 
@@ -80,6 +95,7 @@ builder.Services.AddAuthentication(options =>
 
 var app = builder.Build();
 
+
 // test user
 using (var scope = app.Services.CreateScope())
 {
@@ -102,7 +118,7 @@ using (var scope = app.Services.CreateScope())
 
 
 
-// Configure the HTTP request pipeline.
+// Middleware
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
