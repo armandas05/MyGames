@@ -1,14 +1,23 @@
 import { useState } from "react";
+import api from "../services/api";
 
 function Loginpage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    function handleLogin(event) {
+    async function handleLogin(event) {
         event.preventDefault();
 
-        console.log(email);
-        console.log(password);
+        try {
+            const response = await api.post("/auth/login", {
+                email: email,
+                password: password
+            });
+
+            console.log(response.data);
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     return (
