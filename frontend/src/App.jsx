@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import MyGamesPage from "./pages/MyGamesPage";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Searchpage from "./pages/SearchPage";
 
 function App() {
   return (
@@ -19,6 +20,15 @@ function App() {
           element={
             <ProtectedRoute>
               <MyGamesPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/search"
+          element={
+            <ProtectedRoute>
+              <Searchpage />
             </ProtectedRoute>
           }
         />

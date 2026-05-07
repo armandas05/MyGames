@@ -18,6 +18,10 @@ function Navbar() {
 
             {" | "}
 
+            <Link to="/search">
+                Search
+            </Link>
+
             <button onClick={handleLogout}>
                 Logout
             </button>

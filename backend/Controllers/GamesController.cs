@@ -7,9 +7,9 @@ namespace MyGames.Controllers
     [Route("api/[controller]")]
     public class GamesController : Controller
     {
-        private readonly RawgService _rawgService;
+        private readonly IRawgService _rawgService;
 
-        public GamesController(RawgService rawgService)
+        public GamesController(IRawgService rawgService)
         {
             _rawgService = rawgService;
         }
