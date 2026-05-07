@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Navbar from "../components/Navbar";
 import api from "../services/api";
 
 function MyGamesPage() {
@@ -21,6 +22,8 @@ function MyGamesPage() {
 
     return (
         <div>
+
+            <Navbar />
 
             <h1>My Games</h1>
 
