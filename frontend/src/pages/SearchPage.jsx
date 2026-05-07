@@ -7,8 +7,6 @@ function SearchPage() {
 
     async function handleSearch() {
         try {
-            console.log(query);
-
             const response = await api.get(
                 `/games/search?query=${query}`
             );
@@ -18,6 +16,19 @@ function SearchPage() {
             console.log(error);
         }
     }
+
+    async function addGame(game) {
+        try {
+            await api.post(
+                "/backlog", {
+                    gameID: game.id,
+                    gameName: game.name,
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
 
     return (
         <div>
@@ -48,9 +59,13 @@ function SearchPage() {
                             width="200"
                         />
 
-                    </div>
+                        <button onClick={() => addGame(game)}>
+                            Add Game
+                        </button>
 
+                    </div>
                 ))}
+
 
             </div>
 
