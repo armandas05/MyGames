@@ -14,7 +14,8 @@ function Loginpage() {
                 password: password
             });
 
-            console.log(response.data);
+            localStorage.setItem("token", response.data.token);
+            console.log("Login success");
         } catch (error) {
             console.log(error);
         }
