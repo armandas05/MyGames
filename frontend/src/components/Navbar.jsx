@@ -22,6 +22,8 @@ function Navbar() {
                 Search
             </Link>
 
+            {" | "}
+
             <button onClick={handleLogout}>
                 Logout
             </button>

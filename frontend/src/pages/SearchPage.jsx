@@ -1,5 +1,6 @@
 import { useState } from "react";
 import api from "../services/api";
+import Navbar from "../components/Navbar";
 
 function SearchPage() {
     const [query, setQuery] = useState("");
@@ -23,6 +24,7 @@ function SearchPage() {
                 "/backlog", {
                     gameID: game.id,
                     gameName: game.name,
+                    backgroundImage: game.backgroundImage,
             });
         } catch (error) {
             console.log(error);
@@ -31,7 +33,11 @@ function SearchPage() {
 
 
     return (
+        
         <div className="min-h-screen bg-zinc-950 text-white p-8">
+
+            <Navbar />
+
             <h1 className="text-5xl font-bold mb-8">
                 Search Games
             </h1>

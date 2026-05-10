@@ -15,6 +15,8 @@ namespace MyGames.Data.Database.Models
         public int? Progress { get; set; }
         public string? Notes { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public string? BackgroundImage { get; set; }
+
 
         public int UserID { get; set; }
         public User User { get; set; }

@@ -46,7 +46,7 @@ namespace MyGames.Controllers
             await _backlogService.DeleteUserGameAsync(id, userId);
         }
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUserGameInfo(UpdateGameEntryDto dto, int id)
+        public async Task<IActionResult> UpdateUserGameInfo([FromBody] UpdateGameEntryDto dto, int id)
         {
             if (dto == null) return BadRequest();
 

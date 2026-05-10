@@ -4,5 +4,6 @@
     {
         public int GameID { get; set; }
         public string GameName { get; set; }
+        public string BackgroundImage { get; set; }
     }
 }
