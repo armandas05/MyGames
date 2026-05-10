@@ -20,12 +20,14 @@ namespace MyGames.Services.BacklogService
                 .Where(g => g.UserID == user.UserID)
                 .Select(g => new UserGameListDto
                 {
+                    GameEntryID = g.GameEntryID,
                     GameID = g.GameID,
                     GameName = g.GameName,
                     Status = g.Status,
                     Rating = g.Rating,
                     Progress = g.Progress,
                     Notes = g.Notes,
+                    BackgroundImage = g.BackgroundImage,
                 })
                 .ToListAsync();
 
@@ -55,7 +57,8 @@ namespace MyGames.Services.BacklogService
                 GameName = dto.GameName,
                 Status = GameStatus.PlanToPlay,
                 CreatedAt = DateTime.UtcNow,
-                UserID = user.UserID
+                UserID = user.UserID,
+                BackgroundImage = dto.BackgroundImage
             };
 
             await _context.GameEntries.AddAsync(gameEntry);

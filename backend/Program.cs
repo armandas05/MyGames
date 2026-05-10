@@ -1,15 +1,15 @@
-using Microsoft.EntityFrameworkCore;
-using MyGames.Data.Database;
-using MyGames.Data.Database.Models;
-using MyGames.Services.BacklogService;
-using MyGames.Services.RawgService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using MyGames.Services.AuthService;
-
 //
 using Microsoft.OpenApi.Models;
+using MyGames.Data.Database;
+using MyGames.Data.Database.Models;
+using MyGames.Services.AuthService;
+using MyGames.Services.BacklogService;
+using MyGames.Services.RawgService;
+using System.Text;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,7 +20,12 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 
 // Controllers
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters
+            .Add(new JsonStringEnumConverter());
+    });
 
 
 // SWAGGER

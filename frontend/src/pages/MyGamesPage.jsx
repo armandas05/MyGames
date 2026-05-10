@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import api from "../services/api";
+import GameCard from "../components/GameCard";
 
 function MyGamesPage() {
     const [games, setGames] = useState([]);
@@ -20,24 +21,58 @@ function MyGamesPage() {
         }
     }
 
+    async function deleteGame(id) {
+        try {
+            await api.delete(`/backlog/${id}`);
+
+            setGames(
+                games.filter((g) => g.gameEntryID !== id)
+            );
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async function updateGame(id, updatedGame) {
+        try {
+            await api.put(
+                `/backlog/${id}`,
+                updatedGame
+            );
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
-        <div>
+        <div className="min-h-screen bg-zinc-950 text-white p-8">
 
             <Navbar />
 
-            <h1>My Games</h1>
 
-            {games.map((game) => (
+            <h1 className="text-5xl font-bold mb-8">
+                My Games
+            </h1>
 
-                <div key={game.gameID}>
+            <div className="grid
+                grid-cols-1
+                sm:grid-cols-2
+                md:grid-cols-3
+                lg:grid-cols-4
+                gap-6">
 
-                    <h3>{game.gameName}</h3>
+                {games.map((game) => (
 
-                    <p>Status: {game.status}</p>
+                    <GameCard
+                        key={game.gameID}
+                        game={game}
+                        onDelete={deleteGame}
+                        onUpdate={updateGame}
+                    />
 
-                </div>
-                
-            ))}
+                ))}
+
+            </div>
 
         </div>
     );
